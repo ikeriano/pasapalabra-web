@@ -37,12 +37,13 @@ textarea{width:100%;box-sizing:border-box;font:15px Arial;border-radius:8px;bord
 </style></head><body>
 <canvas id="c"></canvas><div id="hud"></div><div id="err"></div>
 <script>
-window.PP_VERSION='1.0';
+window.PP_VERSION='1.1';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
 try{var c=document.createElement('canvas');if(!(c.getContext('webgl')||c.getContext('experimental-webgl')))show('Este dispositivo no tiene WebGL: el plató 3D no puede mostrarse. Usa el modo Clásico 2D.');}catch(x){}})();
 </script>
 <script src="voz/index.js"></script>
+<script src="../mc3d/mc3d.js"></script>
 <script src="plato.js"></script>
 </body></html>
