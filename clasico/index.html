@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Pasapalabra · Clásico</title>
 <style>
-@font-face{font-family:PPF;src:local("Nunito Black"),local("Arial Black")}
+@font-face{font-family:PPF;src:url(font/Nunito-Black.ttf)}
 html,body{margin:0;height:100%;background:#0a5fd8;overflow:hidden;font-family:PPF,'Arial Black',Arial,sans-serif;color:#fff;-webkit-user-select:none;user-select:none}
 #bgfill{position:fixed;top:0;left:0;right:0;bottom:0;background:#1478ea center/cover no-repeat}
 #pp{position:absolute;top:0;bottom:0;left:50%;overflow:hidden}
@@ -92,7 +92,7 @@ button{font-family:inherit;border:0;color:inherit;cursor:pointer;background:none
 </style></head><body>
 <div id="bgfill"></div><div id="pp"></div><div id="err"></div>
 <script>
-window.PP_VERSION='1.0';
+window.PP_VERSION='1.2';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l,c){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener&&window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});

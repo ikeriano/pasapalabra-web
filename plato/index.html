@@ -34,10 +34,15 @@ button{font-family:inherit;border:0;cursor:pointer}
 textarea{width:100%;box-sizing:border-box;font:15px Arial;border-radius:8px;border:2px solid #9fc4ff;padding:6px}.pitem{font:700 13px Arial;padding:6px;border-bottom:1px solid #cde;cursor:pointer}
 #err{position:fixed;left:0;right:0;bottom:0;max-height:40%;overflow:auto;background:#c00;color:#fff;font:12px monospace;padding:6px;z-index:99;white-space:pre-wrap;display:none}
 @media (max-height:420px){.panel{top:9%;max-height:80%}.key{height:24px}.sub{font-size:14px}}
+body.p3d .sub{background:linear-gradient(#3a72e0,#1745b4);border:3px solid #fff;outline:2px solid #fff;outline-offset:-8px;border-left:3px solid #fff;border-radius:0;text-align:center;font-weight:700;color:#fff;padding:12px 26px;box-shadow:0 4px 14px #0008}
+body.p3d .panel{background:#2a5fd8;border:3px solid #fff;outline:2px solid #fff;outline-offset:-9px;border-radius:0}
+body.p3d .op{background:#ee7a1c!important;border:2px solid #fff!important;border-radius:0!important;color:#fff!important;font-weight:900!important}
+body.p3d .cell,body.p3d .dw{border-radius:0;background:#2a5fd8;border:2px solid #fff}
+body.p3d .crono{background:#ee7a1c;border-color:#fff}
 </style></head><body>
 <canvas id="c"></canvas><div id="hud"></div><div id="err"></div>
 <script>
-window.PP_VERSION='1.1';
+window.PP_VERSION='1.2';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
