@@ -1,0 +1,5 @@
+#menu{background:#1478ea url(../clasico/img/background_donut.png) center/cover no-repeat!important}
+#menu .mbox{background:linear-gradient(90deg,#0000,#0000 40%,#03205fc7 58%)!important}
+.fp{background:radial-gradient(#1f7bff 55%,#fff 58%,#fff 66%,#ff8a1c 68%)!important}.fp:before,.fp:after{display:none!important}
+#loading{background:#1478ea url(../clasico/img/background_donut.png) center/cover!important}
+#classicWrap iframe{background:#1478ea}
