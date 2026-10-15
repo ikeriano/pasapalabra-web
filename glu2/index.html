@@ -1,0 +1,44 @@
+<!doctype html><html lang="es"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Pasapalabra 2: Nueva Edición</title>
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:Arial,Helvetica,sans-serif;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+#st{position:absolute;left:50%;top:50%;width:320px;height:480px;transform-origin:0 0;overflow:hidden;background:#000}
+.scr{position:absolute;inset:0;display:none}.scr.on{display:block}
+.img{position:absolute;left:0;top:0;width:320px}
+.pill{position:absolute;left:58px;width:204px;height:26px;border-radius:13px;border:1px solid #c9d8ff;box-shadow:inset 0 0 0 1px #1b3c9c,0 1px 2px #0008;background:linear-gradient(#5a8cf0,#2a55d8 50%,#1d43c0 51%,#2f62e6);color:#fff;font-weight:bold;font-size:14px;text-align:center;line-height:26px;cursor:pointer}
+.pill.sel,.pill:active{background:linear-gradient(#f07ad8,#c8329e 50%,#b4228c 51%,#d04cb0)}
+.mbtn{position:absolute;left:38px;width:248px;height:38px;cursor:pointer}.mbtn:active,.mbtn.sel{filter:hue-rotate(95deg) saturate(1.3)}
+.back{position:absolute;left:146px;top:440px;width:30px;height:30px;border-radius:50%;cursor:pointer}
+.bar{position:absolute;left:0;top:400px;width:320px;height:80px;background:linear-gradient(#e04ad0,#b02ca8 30%,#8a1c8e 70%,#6a1272);border-top:1px solid #f9a6ef;color:#fff;font-weight:bold;font-size:14px;padding:10px 12px;box-sizing:border-box;line-height:16px}
+.bar.verde{background:linear-gradient(#3ee03e,#1aa21a 50%,#0f8a10);text-align:center;font-size:14px;padding-top:24px}
+.bar .ff{position:absolute;right:4px;bottom:3px;font-size:10px;color:#fff;opacity:.85}
+.top{position:absolute;left:0;top:0;width:320px;height:24px}
+.topbar{position:absolute;left:22px;top:2px;width:270px;height:19px;background:linear-gradient(#a62a9c,#6c1270);color:#fff;font-weight:bold;font-size:13px;line-height:19px;padding-left:8px;box-sizing:border-box;cursor:pointer;border-radius:0 3px 3px 0}
+.home{position:absolute;left:1px;top:1px;width:21px;height:21px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9cc4ff,#2050c0 70%);border:1px solid #fff;cursor:pointer}
+.home:after{content:"";position:absolute;left:5px;top:6px;width:9px;height:7px;background:#fff;clip-path:polygon(50% 0,100% 50%,85% 50%,85% 100%,15% 100%,15% 50%,0 50%)}
+.tmr{position:absolute;width:42px;height:28px;border-radius:14px;background:radial-gradient(circle at 50% 30%,#ffd08a,#f08a1c 60%,#c85a00);border:2px solid #fff;color:#fff;font-weight:bold;font-size:15px;text-align:center;line-height:28px;box-shadow:0 1px 3px #0009}
+.tmr.az{background:radial-gradient(circle at 50% 30%,#a8d0ff,#2a6ae0 60%,#1440a0)}
+.slot{position:absolute;height:24px;background:linear-gradient(#ffa64a,#f07a10);border:1px solid #fff;color:#fff;font-weight:bold;font-size:14px;letter-spacing:1px;line-height:24px;padding-left:6px;box-sizing:border-box;white-space:nowrap}
+.pista{position:absolute;left:2px;top:80px;background:#fff;color:#000;font-weight:bold;font-size:13px;letter-spacing:2px;padding:3px 6px;border:1px solid #888}
+.dlg{position:absolute;inset:0;background:linear-gradient(#0c1838,#050a1c)}
+.dlg p{position:absolute;top:95px;width:100%;text-align:center;color:#fff;font-weight:bold;font-size:15px;margin:0}
+#inp{position:absolute;left:10px;top:160px;width:300px;display:none;background:#e8ecf4;border:1px solid #888;border-radius:6px;padding:8px;box-sizing:border-box;z-index:9}
+#inp input{width:100%;font-size:18px;padding:6px;box-sizing:border-box;text-transform:uppercase}
+#inp button{margin-top:6px;width:100%;font-size:15px;padding:6px;background:#2a55d8;color:#fff;border:0;border-radius:6px}
+.bola{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#d6e8ff,#3a74e0 55%,#173c9a);border:1px solid #fff;color:#fff;font-weight:bold;font-size:12px;text-align:center;line-height:20px;box-shadow:0 1px 2px #0008}
+.bola.ok{background:radial-gradient(circle at 40% 30%,#d8ffd0,#2cc02c 55%,#0a7a10)}.bola.ko{background:radial-gradient(circle at 40% 30%,#ffd6d0,#e03020 55%,#900a0a)}.bola.cur{background:radial-gradient(circle at 40% 30%,#fff2c0,#f0a020 55%,#b06000)}
+.panel{position:absolute;left:196px;top:40px;width:124px;height:345px;background:linear-gradient(90deg,#4cc2ea,#36aedf);border:4px solid #1d4fb8;border-right:0;overflow:hidden}
+.panel b{position:absolute;left:4px;top:136px;font-size:42px;color:#fff;font-family:Arial Black,Arial;letter-spacing:-1px}
+.pasa{position:absolute;left:262px;top:330px;width:56px;height:46px;border-radius:50%;background:radial-gradient(circle at 50% 30%,#ff9ae0,#e0309e 60%,#a01070);border:2px solid #fff;color:#fff;font-weight:bold;font-size:14px;line-height:15px;text-align:center;padding-top:7px;box-sizing:border-box;font-style:italic;cursor:pointer;box-shadow:0 2px 4px #0009}
+.marco{position:absolute;top:24px;width:156px;height:350px;border:3px solid #f08a10;box-sizing:border-box;overflow:hidden;background:#0d2a8a}
+.marco.az{border-color:#2a7af0}
+.tema{position:absolute;left:62px;top:340px;width:196px;height:24px;background:linear-gradient(#e866d8,#a8229a);border:1px solid #fff;color:#fff;font-weight:bold;font-size:15px;text-align:center;line-height:24px}
+.ptos{position:absolute;top:340px;width:26px;height:22px;background:#f08a10;border:2px solid #fff;color:#fff;font-weight:bold;text-align:center;line-height:22px}
+.puls{position:absolute;top:316px;width:46px;height:40px;cursor:pointer;background:radial-gradient(ellipse at 50% 70%,#fff,#b8c0cc 50%,#6a7280);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.puls.on{background:radial-gradient(ellipse at 50% 70%,#fff,#ffd040 50%,#f08a10)}
+.tit{position:absolute;left:0;top:128px;width:320px;text-align:center;color:#ffe9ee;font-size:24px;font-weight:bold;text-shadow:0 0 6px #0008}
+.logo{position:absolute;top:30px;width:100%;text-align:center;color:#fff;font:bold 30px Arial Black,Arial;text-shadow:0 2px 4px #0008}
+.logo i{display:inline-block;width:28px;height:28px;border-radius:50%;background:#fff;color:#c01060;font-style:normal;line-height:28px;font-size:22px;margin-left:4px}
+.logo u{display:block;margin:4px auto 0;width:130px;font-size:12px;text-decoration:none;background:#fff;color:#c01060;border-radius:9px}
+</style></head><body><div id="st"></div><div id="inp"><input id="inpt" autocomplete="off" autocapitalize="characters"><button id="inpb">Responder</button></div>
+<script src="glu2.js"></script></body></html>
