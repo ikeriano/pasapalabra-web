@@ -197,7 +197,7 @@ var __values = (this && this.__values) || function(o) {
         limpia();
         root.innerHTML = "";
         var s = $("div", "scr " + (cls || ""));
-        s.style.backgroundImage = "url(" + IMG("background_donut") + ")";
+        s.style.backgroundImage = /alaz|sillaz/.test(cls || "") ? "none" : "url(" + IMG("background_donut") + ")";
         root.appendChild(s);
         return s;
     }
@@ -206,8 +206,19 @@ var __values = (this && this.__values) || function(o) {
         return Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2);
     };
     var carrera = null;
-    var RONDAS = function () { return ["silla", "una4", localStorage.getItem("pp_sopa") === "cruzadas" ? "cruzadas" : "sopa", "donde"]; };
+    var RONDAS = function () { return (carrera && carrera.sinSilla ? [] : ["silla"]).concat(["una4", localStorage.getItem("pp_sopa") === "cruzadas" ? "cruzadas" : "sopa", "donde"]); };
+    function nuevaCarrera(c) {
+        c = c || {};
+        c.seg = c.seg || {};
+        if (localStorage.getItem("pp_sinSilla") === "1") {
+            c.sinSilla = true;
+            localStorage.removeItem("pp_sinSilla");
+        }
+        return c;
+    }
     var NOMBRE = { silla: "La silla azul", una4: "Una de cuatro", sopa: "Sopa de letras", cruzadas: "Palabras cruzadas", donde: "¿Dónde están?", rosco: "El rosco", alaz: "AlaZ" };
+    var AZICO = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g font-family="Arial Black,Arial" font-weight="900" font-size="22" text-anchor="middle"><rect x="2" y="18" width="28" height="30" rx="5" fill="#fff" stroke="#2448c8" stroke-width="3"/><text x="16" y="41" fill="#2448c8">A</text><rect x="34" y="18" width="28" height="30" rx="5" fill="#3fd04a" stroke="#fff" stroke-width="3"/><text x="48" y="41" fill="#fff">Z</text></g></svg>');
+    var ICO = function (k) { return k === "alaz" ? AZICO : IMG(ICONO[k]); };
     var ICONO = { silla: "icon_blueChair", una4: "icon_oneOfFour", sopa: "icon_alphabetSoup", cruzadas: "icon_alphabetSoup", donde: "icon_whereAre", rosco: "icon_donut", alaz: "icon_donut" };
     function cabecera(s, titulo, icono, salir) {
         var h2 = $("div", "hdr");
@@ -412,7 +423,7 @@ var __values = (this && this.__values) || function(o) {
         b("m-carrera", "icon_singleplayer", "CARRERA", function () { return elegir(); });
         b("m-diario", "icon_daily", "ROSCO DIARIO", function () { return final(finalElegida(), { diario: true }); }, "+");
         b("m-comp", "icon_multiplayer", "COMPETICIÓN", function () {
-            carrera = { seg: {}, comp: true };
+            carrera = nuevaCarrera({ comp: true });
             progreso();
         });
     }
@@ -433,7 +444,7 @@ var __values = (this && this.__values) || function(o) {
         var T = [["silla", "La silla azul"], ["una4", "Una de cuatro"], [sopaK, NOMBRE[sopaK]], ["donde", "¿Dónde están?"], ["rosco", finalElegida() === "alaz" ? "AlaZ" : "El rosco"], ["tv", "Programa TV"]];
         T.forEach(function (_a) {
             var _c = __read(_a, 2), k = _c[0], n = _c[1];
-            var t = $("button", "tile" + (k === "tv" ? " tv" : "") + (k === sel ? " sel" : ""), '<img src="' + IMG(k === "tv" ? "icon_classic" : ICONO[k]) + '"><span>' + n + "</span>");
+            var t = $("button", "tile" + (k === "tv" ? " tv" : "") + (k === sel ? " sel" : ""), '<img src="' + (k === "tv" ? IMG("icon_classic") : k === "rosco" && finalElegida() === "alaz" ? AZICO : ICO(k)) + '"><span>' + n + "</span>");
             t.onclick = function () {
                 snd("menu_press");
                 sel = k;
@@ -452,7 +463,7 @@ var __values = (this && this.__values) || function(o) {
         j.onclick = function () {
             snd("game_in");
             if (sel === "tv") {
-                carrera = { seg: {} };
+                carrera = nuevaCarrera();
                 progreso();
             }
             else if (sel === "rosco")
@@ -467,8 +478,10 @@ var __values = (this && this.__values) || function(o) {
         var L = RONDAS();
         var i = L.findIndex(function (k) { return carrera.seg[k] == null; });
         var lista2 = $("div", "plist");
+        if (carrera.sinSilla)
+            lista2.appendChild($("div", "prow nos", "<b>SIN SILLA AZUL</b><small>El último programa acabó en empate</small>"));
         L.forEach(function (k, n) {
-            var r = $("div", "prow" + (n === i ? " cur" : "") + (carrera.seg[k] != null ? " done" : ""), '<img src="' + IMG(ICONO[k]) + '"><b>' + NOMBRE[k].toUpperCase() + "</b>" + (n === i ? "<small>Presiona para empezar</small>" : "") + (carrera.seg[k] != null ? "<i>" + carrera.seg[k] + "</i>" : ""));
+            var r = $("div", "prow" + (n === i ? " cur" : "") + (carrera.seg[k] != null ? " done" : ""), '<img src="' + ICO(k) + '"><b>' + NOMBRE[k].toUpperCase() + "</b>" + (n === i ? "<small>Presiona para empezar</small>" : "") + (carrera.seg[k] != null ? "<i>" + carrera.seg[k] + "</i>" : ""));
             if (n === i)
                 r.onclick = function () {
                     snd("menu_press");
@@ -478,7 +491,7 @@ var __values = (this && this.__values) || function(o) {
         });
         var tot = L.reduce(function (a, k) { return a + (carrera.seg[k] || 0); }, 0);
         var f = finalElegida();
-        var rr = $("div", "prow fin" + (i < 0 ? " cur" : ""), '<img src="' + IMG("icon_donut") + '"><b>' + NOMBRE[f].toUpperCase() + "</b><i>" + tot + "</i>" + (i < 0 ? "<small>Presiona para empezar</small>" : ""));
+        var rr = $("div", "prow fin" + (i < 0 ? " cur" : ""), '<img src="' + ICO(f === "alaz" ? "alaz" : "rosco") + '"><b>' + NOMBRE[f].toUpperCase() + "</b><i>" + tot + "</i>" + (i < 0 ? "<small>Presiona para empezar</small>" : ""));
         if (i < 0)
             rr.onclick = function () { return final(f, { extra: tot }); };
         lista2.appendChild(rr);
@@ -510,82 +523,147 @@ var __values = (this && this.__values) || function(o) {
             f();
         }, 1700);
     }
+    var PERSONA = function (c) { return "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c + '"/><stop offset="1" stop-color="#0b1f5a"/></linearGradient></defs><path d="M6 120 C8 88 24 76 50 76 C76 76 92 88 94 120 Z" fill="url(#g)"/><rect x="42" y="62" width="16" height="18" rx="6" fill="#e9b48f"/><ellipse cx="50" cy="42" rx="20" ry="24" fill="#f1c29c"/><path d="M29 38 C29 18 44 14 52 15 C66 16 73 26 71 40 C68 30 60 26 50 27 C40 27 33 31 29 38 Z" fill="#3a2414"/></svg>'); };
+    var VETERANOS = ["RUBÉN", "NACHO", "MARTA", "AITOR", "LAURA", "ALBERTO", "SARA", "PABLO"];
     function silla(solo) {
-        var s = pantalla("silla");
+        var s = pantalla("sillaz");
         cabecera(s, "LA SILLA AZUL", "icon_blueChair");
-        s.querySelector(".back img").src = IMG("image_emptyUser");
-        var n = 0, vidas = 2, hits = 0;
-        var TOT = 7;
-        var usadas = {};
-        var cont = $("div", "cnt", "");
-        s.appendChild(cont);
-        var st = enunciado(s, "");
-        var fila = $("div", "sfila");
-        s.appendChild(fila);
-        var pts = $("div", "ball ok big", "0");
-        pts.style.backgroundImage = "url(" + IMG("button_score") + ")";
-        var fin = function () {
-            banner(s, hits + " aciertos", "LA SILLA AZUL", 1600);
-            finRonda("silla", hits * 2, solo);
-        };
-        var actual = null;
         snd("blueChair_in");
-        var pide = function () {
-            if (n >= TOT || vidas <= 0)
-                return fin();
-            cont.textContent = n + 1 + "/" + TOT;
-            var op = baraja(LETRAS.filter(function (l) { return !usadas[l] && porLetra(l).some(function (b) { return b.t === "e"; }); })).slice(0, 2);
-            st.innerHTML = "<small>Elige letra</small>";
-            fila.innerHTML = "";
-            op.forEach(function (l) {
-                var b = $("button", "donut big", l);
-                b.style.backgroundImage = "url(" + IMG("donut_default") + ")";
-                b.onclick = function () {
-                    usadas[l] = 1;
-                    snd("menu_press");
-                    muestra(l);
-                };
-                fila.appendChild(b);
+        var yo = localStorage.getItem("pp_nombre") || "IKER";
+        var vet = baraja(VETERANOS.filter(function (n) { return n !== yo; }))[0];
+        var A = { n: yo, ko: 0, bot: false }, V = { n: vet, ko: 0, bot: true };
+        var aros = $("div", "szaros");
+        s.appendChild(aros);
+        var pers = function (X2, lado) {
+            var p = $("div", "szper " + lado, '<img src="' + PERSONA(X2 === V ? "#1aa34a" : "#2a5bd8") + '"><span class="szchapa">' + X2.n + "</span>");
+            s.appendChild(p);
+            return p;
+        };
+        var pV = pers(V, "iz"), pA = pers(A, "de");
+        var op = baraja(LETRAS.filter(function (l) { return "ÑXQYKWHUIJZ".indexOf(l) < 0 && porLetra(l).filter(function (b) { return b.t === "e"; }).length >= 4; })).slice(0, 2);
+        var hint = $("div", "szhint", "Elige tu letra");
+        s.appendChild(hint);
+        var ls = op.map(function (l, i) {
+            var b = $("button", "szl", l);
+            b.style.left = i ? "57%" : "25%";
+            b.onclick = function () { return elige(l); };
+            s.appendChild(b);
+            return b;
+        });
+        var elegido = false;
+        var elige = function (l) {
+            if (elegido)
+                return;
+            elegido = true;
+            snd("menu_press");
+            A.L = l;
+            V.L = op[0] === l ? op[1] : op[0];
+            ls.forEach(function (b) { return b.classList.add(b.textContent === l ? "sel" : "off"); });
+            hint.innerHTML = "Tú: <b>" + A.L + "</b> · " + V.n + ": <b>" + V.L + "</b>";
+            later(partida, 1500);
+        };
+        var usadas = {};
+        var X = null, actual = null, kb = null;
+        var st = { def: null };
+        var partida = function () {
+            [aros, pV, pA, hint].concat(ls).forEach(function (e) { return e.remove(); });
+            var mk = function (Y, lado) {
+                var p = $("div", "szp " + lado, '<div class="szpar"></div><img src="' + PERSONA(Y === V ? "#1aa34a" : "#2a5bd8") + '"><span class="szchapa">' + Y.n + "</span>");
+                var pill = $("div", "szpill", "<i>" + Y.L + "</i><b></b><b></b>");
+                p.appendChild(pill);
+                s.appendChild(p);
+                Y.p = p;
+                Y.b = pill.querySelectorAll("b");
+            };
+            mk(V, "iz");
+            mk(A, "de");
+            st.def = $("div", "szdef", "");
+            s.appendChild(st.def);
+            kb = teclado(s, function (v) {
+                if (!actual || X !== A)
+                    return;
+                resuelve(norm(v) === norm(actual.w));
             });
+            s.querySelector(".kbw").classList.add("szkb");
+            X = V;
+            later(sig, 400);
         };
-        var muestra = function (l) {
-            var c = porLetra(l).filter(function (b) { return b.t === "e"; });
-            actual = c[Math.floor(Math.random() * c.length)];
-            st.innerHTML = actual.d.toUpperCase();
-            fila.innerHTML = "";
-            var d = $("div", "donut", l);
-            d.style.backgroundImage = "url(" + IMG("donut_selected") + ")";
-            fila.insertBefore(pts, fila.firstChild);
-            fila.appendChild(d);
-            for (var i = 0; i < 2; i++) {
-                var v = $("div", "life" + (i < vidas ? "" : " off"));
-                v.style.backgroundImage = "url(" + IMG(i < vidas ? "donut_hit" : "donut_gray") + ")";
-                fila.appendChild(v);
+        var pide = function (Y) {
+            var L = porLetra(Y.L);
+            var c = L.filter(function (b2) { return b2.t === "e" && !usadas[b2.w]; });
+            if (!c.length)
+                c = L.filter(function (b2) { return !usadas[b2.w]; });
+            if (!c.length)
+                c = L;
+            var b = c[Math.floor(Math.random() * c.length)];
+            usadas[b.w] = 1;
+            return b;
+        };
+        var reloj10 = null;
+        var sig = function () {
+            if (A.ko >= 2 || V.ko >= 2)
+                return fin();
+            X = X === A ? V : A;
+            actual = pide(X);
+            A.p.classList.toggle("on", X === A);
+            V.p.classList.toggle("on", X === V);
+            st.def.innerHTML = "<small>" + X.n + " · " + prefijo(actual).toUpperCase() + "</small>" + actual.d.toUpperCase();
+            s.querySelector(".kbw").style.visibility = X === A ? "" : "hidden";
+            window.__PPW = X === A ? actual.w : null;
+            if (X === V)
+                later(function () { return resuelve(Math.random() < 0.72); }, 1800 + Math.random() * 1800);
+            else {
+                var t_1 = 20;
+                var tm_1 = $("div", "sztm", t_1);
+                s.appendChild(tm_1);
+                reloj10 = { tm: tm_1, id: every(function () {
+                        t_1--;
+                        tm_1.textContent = t_1;
+                        if (t_1 <= 5 && t_1 > 0)
+                            snd("countdown_time", 0.5);
+                        if (t_1 <= 0)
+                            resuelve(false);
+                    }, 1e3) };
             }
-            var bu = $("div", "bulb", "💡");
-            bu.style.backgroundImage = "url(" + IMG("dot_info") + ")";
-            fila.appendChild(bu);
         };
-        teclado(s, function (v) {
+        var resuelve = function (ok) {
             if (!actual)
                 return;
-            var ok = norm(v) === norm(actual.w);
+            var b = actual;
+            actual = null;
+            if (reloj10) {
+                clearInterval(reloj10.id);
+                reloj10.tm.remove();
+                reloj10 = null;
+            }
             if (ok) {
-                hits++;
-                pts.textContent = hits;
                 snd("blueChair_hit");
-                banner(s, "¡CORRECTO!", actual.w, 900);
+                st.def.innerHTML = "<small>" + X.n + "</small>" + b.w.toUpperCase() + " ✓";
             }
             else {
-                vidas--;
+                X.b[X.ko].classList.add("off");
+                X.ko++;
                 snd("blueChair_fail");
-                banner(s, actual.w, "ERA…", 1300);
+                st.def.innerHTML = "<small>" + X.n + " · ERA…</small>" + b.w.toUpperCase();
             }
-            actual = null;
-            n++;
-            later(pide, 1200);
+            later(sig, 1600);
+        };
+        var fin = function () {
+            var gana = V.ko >= 2;
+            window.__PPSILLA = gana ? "A" : "V";
+            s.querySelector(".kbw").style.visibility = "hidden";
+            A.p.classList.remove("on");
+            V.p.classList.remove("on");
+            banner(s, gana ? "¡TE SIENTAS EN LA SILLA AZUL!" : "ELIMINADO", gana ? V.n + " queda eliminado" : V.n + " conserva la silla azul", 2400);
+            if (gana || solo || !carrera)
+                finRonda("silla", 0, solo);
+            else {
+                snd("game_out");
+                later(menu, 2600);
+            }
+        };
+        turno(s, "La silla azul", function () {
         });
-        turno(s, "La silla azul", pide);
     }
     function una4(solo) {
         var s = pantalla("una4");
@@ -938,7 +1016,7 @@ var __values = (this && this.__values) || function(o) {
             return;
         }
         var alaz = tipo === "alaz";
-        var s = pantalla("rosco");
+        var s = pantalla(alaz ? "rosco alaz" : "rosco");
         music(false);
         var r = op.diario ? rnd(hoySemilla()) : Math.random;
         cabecera(s, alaz ? "AlaZ" : "El Rosco", "icon_settings", function () {
@@ -953,9 +1031,16 @@ var __values = (this && this.__values) || function(o) {
         if (alaz && op.zaa)
             orden.reverse();
         var est = preg.map(function () { return 0; });
-        var ring = $("div", "ring");
+        if (alaz)
+            s.classList.add("alazs");
+        var ring = $("div", alaz ? "azfila2" : "ring");
         s.appendChild(ring);
         var dn = LETRAS.map(function (l, i) {
+            if (alaz) {
+                var d2 = $("div", "azt2", l);
+                ring.appendChild(d2);
+                return d2;
+            }
             var a = -Math.PI / 2 + i / 25 * Math.PI * 2;
             var d = $("div", "donut sm", l);
             d.style.left = 50 + 44 * Math.cos(a) + "%";
@@ -964,8 +1049,14 @@ var __values = (this && this.__values) || function(o) {
             ring.appendChild(d);
             return d;
         });
-        var cen = $("div", "rcen");
-        ring.appendChild(cen);
+        var cen = $("div", alaz ? "azcen2" : "rcen");
+        (alaz ? s : ring).appendChild(cen);
+        var marca = function (i, st) {
+            if (alaz)
+                dn[i].className = "azt2" + (st === 3 ? " c" : st === 1 ? " o" : st === 2 ? " k" : "");
+            else
+                dn[i].style.backgroundImage = "url(" + IMG(st === 3 ? "donut_selected" : st === 1 ? "donut_hit" : st === 2 ? "donut_fail" : "donut_default") + ")";
+        };
         var pp = $("button", "ppbtn", alaz ? "LETRA (−5 s)" : "PASAPALABRA");
         pp.style.backgroundImage = "url(" + IMG("button_orange") + ")";
         var sc = marcador(s, "right");
@@ -977,7 +1068,7 @@ var __values = (this && this.__values) || function(o) {
             if (!p.length)
                 return acaba();
             if (cur >= 0)
-                dn[cur].style.backgroundImage = "url(" + IMG(est[cur] === 1 ? "donut_hit" : est[cur] === 2 ? "donut_fail" : "donut_default") + ")";
+                marca(cur, est[cur]);
             var k = orden.indexOf(cur);
             var j = -1;
             for (var x = 1; x <= 25; x++) {
@@ -991,7 +1082,7 @@ var __values = (this && this.__values) || function(o) {
                 j = p[0];
             cur = j;
             vis = [0];
-            dn[cur].style.backgroundImage = "url(" + IMG("donut_selected") + ")";
+            marca(cur, 3);
             texto();
         };
         var texto = function () {
@@ -1042,7 +1133,7 @@ var __values = (this && this.__values) || function(o) {
         muestra();
     }
     function resultado(tipo, preg, est, usado, op) {
-        var s = pantalla("res");
+        var s = pantalla("res" + (tipo === "alaz" ? " alaz" : ""));
         var ok = est.filter(function (e) { return e === 1; }).length, ko = est.filter(function (e) { return e === 2; }).length;
         var premio = "";
         if (ok === 25) {
@@ -1070,7 +1161,7 @@ var __values = (this && this.__values) || function(o) {
         var i = 0;
         var pinta = function () {
             var b = preg[i];
-            lst.innerHTML = '<div class="donut sm" style="position:static;margin:auto;background-image:url(' + IMG(est[i] === 1 ? "donut_hit" : est[i] === 2 ? "donut_fail" : "donut_default") + ')">' + b.l + "</div><small>" + prefijo(b).toUpperCase() + "</small><p>" + b.d + "</p><u>" + b.w + "</u><i>" + (i + 1) + "/25</i>";
+            lst.innerHTML = (tipo === "alaz" ? '<div class="azt2' + (est[i] === 1 ? " o" : est[i] === 2 ? " k" : "") + '" style="margin:auto;width:2em;font-size:1em">' + b.l + "</div>" : '<div class="donut sm" style="position:static;margin:auto;background-image:url(' + IMG(est[i] === 1 ? "donut_hit" : est[i] === 2 ? "donut_fail" : "donut_default") + ')">' + b.l + "</div>") + "<small>" + prefijo(b).toUpperCase() + "</small><p>" + b.d + "</p><u>" + b.w + "</u><i>" + (i + 1) + "/25</i>";
         };
         pinta();
         var nav = $("div", "rnav");
@@ -1140,7 +1231,7 @@ var __values = (this && this.__values) || function(o) {
     else if (NOMBRE[h])
         ronda(h, true);
     else if (h === "carrera") {
-        carrera = { seg: {} };
+        carrera = nuevaCarrera();
         progreso();
     }
     else if (h === "menu")

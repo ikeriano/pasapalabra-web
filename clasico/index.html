@@ -89,10 +89,39 @@ button{font-family:inherit;border:0;color:inherit;cursor:pointer;background:none
 .orow{margin:.4em 0}.orow span{display:inline-block;width:40%}.obtn{background:#cfe0f6;border-radius:1em;padding:.35em .8em;margin:.15em;color:#0a3c9c}.obtn.sel{background:#ff8a1c;color:#fff}
 .packs img{width:30%;margin:1%}.small{font-size:.75em;opacity:.8}
 #err{position:fixed;left:0;right:0;bottom:0;max-height:40%;overflow:auto;background:#c00;color:#fff;font:12px monospace;padding:6px;z-index:99;white-space:pre-wrap;display:none}
+
+/* v2.12 · La silla azul nueva */
+.sillaz{background:#0757e8!important}.sillaz .hdr{z-index:4}.sillaz .szper .szchapa{top:-3.2em}
+.szaros,.szp .szpar{position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-radial-gradient(circle at 50% 30%,#0a8dff 0,#0a8dff 1.6em,#0466f2 1.8em,#035bfd 2.6em,#0a8dff 2.9em,#0787ff 3.6em)}
+.szl{position:absolute;top:6em;width:5.6em;height:5.6em;border-radius:50%;background:radial-gradient(circle at 50% 45%,#0a63ff,#003aff 72%);border:.3em solid #fff;box-shadow:0 0 0 .15em #035bfd;color:#fff;font-size:1em;line-height:5em;text-align:center;-webkit-transition:transform .2s,opacity .3s;transition:transform .2s,opacity .3s}
+.szl{font-size:1.6em;width:3.5em;height:3.5em;line-height:3.1em;top:3.8em}
+.szl.sel{-webkit-transform:scale(1.15);transform:scale(1.15)}.szl.off{opacity:.35}
+.szhint{position:absolute;top:13.5em;left:0;right:0;text-align:center;font-size:1.2em;text-shadow:0 .1em .3em rgba(0,0,0,.4)}
+.szper{position:absolute;bottom:4%;width:44%;text-align:center}.szper.iz{left:3%}.szper.de{right:3%}.szper img{width:100%;-webkit-filter:drop-shadow(0 .3em .4em rgba(0,0,40,.5));filter:drop-shadow(0 .3em .4em rgba(0,0,40,.5))}
+.szchapa{display:inline-block;min-width:4em;padding:.5em .6em;border-radius:50%;background:radial-gradient(circle at 50% 35%,#4a8cff,#0d3fd0);border:.12em solid #9cc4ff;font-size:.62em;white-space:nowrap}
+.szper .szchapa{position:relative;top:-6em}
+.szp{position:absolute;top:4.6em;bottom:23.5em;width:46%;overflow:hidden;border-radius:1.4em;border:.45em solid #19d4ff;box-shadow:0 0 0 .15em #0aa8f0;text-align:center;box-sizing:border-box;min-height:12em}
+.szp.iz{left:2.5%}.szp.de{right:2.5%}.szp.on{box-shadow:0 0 0 .15em #0aa8f0,0 0 1.2em #fff}
+.szp img{position:absolute;left:8%;width:84%;bottom:2.6em}.szp .szchapa{position:absolute;left:50%;bottom:4.2em;-webkit-transform:translateX(-50%);transform:translateX(-50%)}
+.szpill{position:absolute;left:50%;bottom:.5em;-webkit-transform:translateX(-50%);transform:translateX(-50%);width:7.4em;height:2.4em;border-radius:1.2em;background:linear-gradient(#1d55ff,#0a35d8);border:.18em solid #fff;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-around;justify-content:space-around;box-sizing:border-box}
+.szpill i{font-style:normal;width:1.8em;height:1.8em;line-height:1.8em;border-radius:50%;background:#fff;color:#1336d8;border:.1em solid #2b5cff;font-size:1em}
+.szpill b{width:1.7em;height:1.7em;border-radius:50%;background:radial-gradient(circle at 45% 40%,#3ee83a,#13b812 70%);border:.08em solid #0a8a0a;-webkit-transition:background .3s;transition:background .3s}
+.szpill b.off{background:radial-gradient(circle at 45% 40%,#ff6b6b,#c41a1a 70%);border-color:#7a0a0a}
+.szdef{position:absolute;left:4%;right:4%;bottom:16.2em;min-height:6em;padding:.5em;border-radius:.6em;background:rgba(11,47,168,.92);border:.12em solid #9cc4ff;text-align:center;font-size:.95em;line-height:1.25;box-sizing:border-box;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:center;justify-content:center}
+.szdef small{display:block;color:#bfe0ff;font-size:.8em;margin-bottom:.2em}
+.sztm{position:absolute;left:50%;top:5.4em;margin-left:-1.4em;width:2.8em;height:2.8em;line-height:2.4em;border-radius:.6em;background:linear-gradient(#2f7cff,#0d4fd8);border:.2em solid #fff;text-align:center;font-size:1.1em;box-sizing:border-box;z-index:3}
+.prow.nos{background:rgba(255,138,28,.85)!important;text-align:center}
+/* v2.12 · A la Z sin rosco: fila horizontal de fichas */
+.scr.alaz{background:linear-gradient(160deg,#1aa0f5,#0e7be6 50%,#1592ee)!important}
+.azfila2{position:absolute;top:5em;left:2%;right:2%;display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;-webkit-justify-content:center;justify-content:center}
+.azt2{width:1.62em;height:2em;line-height:2em;margin:.1em;text-align:center;border-radius:.3em;background:linear-gradient(#5be35a,#1fb52e 55%,#159a26);border:.1em solid #b8f5b8;color:#fff;font-size:1em;text-shadow:0 .05em .05em #0a5a14;box-sizing:border-box}
+.azt2.c{background:#fff;color:#2c46d6;border:.14em solid #2c46d6;text-shadow:none}.azt2.o{background:linear-gradient(#2a7bff,#0a45d0);border-color:#bfe0ff}.azt2.k{background:linear-gradient(#ff6a6a,#c01a1a);border-color:#ffd0d0}
+.azcen2{position:absolute;top:10.4em;left:4%;right:4%;padding:.6em;border-radius:.6em;background:linear-gradient(#2f6ff0,#1240c8);border:.12em solid #9fd0ff;text-align:center}.azcen2 b{font-size:.9em}.azcen2 p{font-size:.75em;margin:.3em 0}.azcen2 .estr{letter-spacing:.15em;font-size:1em;margin:.2em 0}
+.alaz .timer.left{top:auto!important;bottom:17em!important}.alaz .score.right{top:auto!important;bottom:17.4em!important}.azcen2 .ppbtn{position:static!important;margin:.3em auto 0!important}
 </style></head><body>
 <div id="bgfill"></div><div id="pp"></div><div id="err"></div>
 <script>
-window.PP_VERSION='2.10';
+window.PP_VERSION='2.12';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l,c){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener&&window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
