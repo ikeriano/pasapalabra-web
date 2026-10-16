@@ -115,10 +115,12 @@ body.alaz .azhud .kbw .key{height:24px}
  body.alaz .rot,body.alaz .marc{display:none}
  body.alaz.kbup .aztm,body.alaz.kbup .azok,body.alaz.kbup .aznom{display:none}
 }
+.pmv{text-align:center;margin:4px 0 8px}.pmv i{display:inline-block;font-style:normal;margin:0 3px;padding:3px 9px;border-radius:12px;background:#1f7bff;border:2px solid #9fc4ff;font-size:14px}.pmv i.c{background:#ffd23a;color:#10204a;border-color:#fff}.pmv i.u{opacity:.35}
+.ppi{margin:3px 0;opacity:.75}.ppi.n{opacity:1;color:#ffd23a}
 </style></head><body>
 <canvas id="c"></canvas><div id="hud"></div><div id="err"></div>
 <script>
-window.PP_VERSION='2.10';
+window.PP_VERSION='2.11';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
