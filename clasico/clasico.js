@@ -928,6 +928,15 @@ var __values = (this && this.__values) || function(o) {
         });
     }
     function final(tipo, op) {
+        if (window.PPCab && PPCab.tiene(tipo === "alaz" ? "alaz" : "rosco") && !(op && op.__cab)) {
+            music(false);
+            op = op || {};
+            op.__cab = 1;
+            PPCab.play(tipo === "alaz" ? "alaz" : "rosco").then(function () {
+                final(tipo, op);
+            });
+            return;
+        }
         var alaz = tipo === "alaz";
         var s = pantalla("rosco");
         music(false);

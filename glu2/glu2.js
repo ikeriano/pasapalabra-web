@@ -119,7 +119,7 @@ function seleccion() {
   pinta(); s.querySelector('#izq').onclick = () => { clic(); i = (i + 5) % 6; pinta(); }; s.querySelector('#der').onclick = () => { clic(); i = (i + 1) % 6; pinta(); };
   s.querySelector('#ok').onclick = () => { clic(); J.pj = i; J.rival = (i + 1 + Math.floor(Math.random() * 5)) % 6; siguiente(); };
 }
-function siguiente() { const k = J.cola.shift(); if (!k) return final(); transicion(k, () => presenta(k, () => PRUEBA[k](() => siguiente()))); }
+function siguiente() { const k = J.cola.shift(); if (!k) return final(); if (k == 'rosco' && window.PPCab) { musica(''); return PPCab.play('rosco').then(() => transicion(k, () => presenta(k, () => PRUEBA[k](() => siguiente())))); } transicion(k, () => presenta(k, () => PRUEBA[k](() => siguiente()))); }
 function transicion(k, cb) {
   musica(''); const im = { escalera: 'tr_escalera.jpg', pulsador: 'tr_pulsador.jpg', rosco: 'tr_rosco.jpg' }[k];
   const s = pantalla(OF ? `<img class="img" src="${I(im || 'tr_base.jpg')}" style="opacity:0;transition:opacity .5s">${im ? '' : `<div class="tit" style="top:140px;left:120px;width:190px;text-align:left;font-size:22px">${NOMBRE[k].replace(' ', '<br>')}</div>`}` : `<div style="position:absolute;inset:0;background:radial-gradient(#d8102a,#5a0010)"></div><div class="tit">${NOMBRE[k]}</div>`);

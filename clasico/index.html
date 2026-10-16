@@ -92,7 +92,7 @@ button{font-family:inherit;border:0;color:inherit;cursor:pointer;background:none
 </style></head><body>
 <div id="bgfill"></div><div id="pp"></div><div id="err"></div>
 <script>
-window.PP_VERSION='2.2';
+window.PP_VERSION='2.10';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l,c){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener&&window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
@@ -100,5 +100,7 @@ function fit(){var W=window.innerWidth,H=window.innerHeight,w=Math.min(W,H*0.562
 fit();window.addEventListener('resize',fit);document.getElementById('bgfill').style.backgroundImage='url(img/background_donut.png)';})();
 </script>
 <script src="compat.js"></script>
+<script src="../cab/list.js"></script>
+<script src="../cab/cab.js"></script>
 <script src="clasico.js"></script>
 </body></html>

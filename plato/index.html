@@ -118,7 +118,7 @@ body.alaz .azhud .kbw .key{height:24px}
 </style></head><body>
 <canvas id="c"></canvas><div id="hud"></div><div id="err"></div>
 <script>
-window.PP_VERSION='2.9';
+window.PP_VERSION='2.10';
 (function(){var e=document.getElementById('err');function show(m){e.style.display='block';e.textContent+=m+'\n';}
 window.onerror=function(m,s,l){show('Error: '+m+' ('+(s||'').split('/').pop()+':'+l+')');};
 window.addEventListener('unhandledrejection',function(ev){show('Promesa: '+(ev.reason&&ev.reason.message||ev.reason));});
@@ -126,5 +126,7 @@ try{var c=document.createElement('canvas');if(!(c.getContext('webgl')||c.getCont
 </script>
 <script src="voz/index.js"></script>
 <script src="../mc3d/mc3d.js"></script>
+<script src="../cab/list.js"></script>
+<script src="../cab/cab.js"></script>
 <script src="plato.js"></script>
 </body></html>
